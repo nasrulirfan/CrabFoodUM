@@ -6,12 +6,12 @@ import java.util.Timer;
 
 public class Timerclass {
 
-    Integer secondpassed = 0;
+    private Integer secondpassed = 0;
     int customer = 0;
-    Timer timer = new Timer();
-    CrabProcess data = new CrabProcess();
+    private Timer timer = new Timer();
+    private CrabProcess data = new CrabProcess();
     public ArrayList<CustomerOrder> Order = new ArrayList<>();
-    TimerTask Timer = new TimerTask() {
+    private TimerTask Timer = new TimerTask() {
 
         @Override
         public void run() {
@@ -24,14 +24,15 @@ public class Timerclass {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if(secondpassed == 0)
-                System.out.println(secondpassed + ": a new day has start!");
+            if (secondpassed == 0)
+            System.out.println(secondpassed + ": a new day has start!");
                 /*if (secondpassed == data.getTimeCustomer(customer)){
                     System.out.println(secondpassed + ": Customer " + customer + " wants to order " + data.getDishesCustomer(customer) + " from " + data.getRestaurantCustomer(customer));
-                    System.out.println(secondpassed + ": Branch of " + data.getRestaurantCustomer(customer) + " at " + data.getLocationRestaurant(rand_location) + " take the order");
+                    System.out.println(secondpassed + ": Branch of " + data.getRestaurantCustomer(customer) + " at " + data.getLocationRestaurant(rand_location2,rand_location) + " take the order");
                     CustomerOrder newOrder = new CustomerOrder(customer,data.getDishesCustomer(customer),data.getRestaurantCustomer(customer));
                     Order.add(newOrder);
                     customer++;
+                    System.out.println(Order);
                    }*/
             secondpassed++;
         }
@@ -44,4 +45,8 @@ public class Timerclass {
     public int completetime(int index, String namedish){
         return secondpassed + data.getDishesTimeRestaurant(index,namedish);
     }
+
+    //public int countcompletetime(String ID){
+        //return secondpassed + data.getTimeCustomer();
+  //  }
 }

@@ -2,27 +2,29 @@ import java.io.*;
 import java.util.*;
 
 public class CrabProcess {
-    public ArrayList<CustomerDetails> customerdetails = new ArrayList<>();
-    public ArrayList<RestaurantData> restaurantdata = new ArrayList<>();
-    public ArrayList<DishesDetails> dishesdata = new ArrayList<>();
+    private ArrayList<CustomerDetails> customerdetails = new ArrayList<>();
+    private ArrayList<RestaurantData> restaurantdata = new ArrayList<>();
+    private ArrayList<DishesDetails> dishesdata = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> location;
 
-    public void readCustomer(String filename) throws IOException {
+    void readCustomer(String filename) throws IOException {
         BufferedReader read = new BufferedReader(new FileReader(filename));
         String line;
-        String allInfo = "";
+        StringBuilder allInfo = new StringBuilder();
         String[] splitter;
-        String trash = null;
+        StringBuilder trash = null;
         while ((line = read.readLine()) != null) {
             if (isStringInt(line)) {
                 int time = Integer.parseInt(line);
-                allInfo += time + ",";
-            } else if (line.equals(null) || line.equals(" ")) {
-                trash += line;
+                allInfo.append(time).append(",");
+            } else if (line.equals(" ")) {
+                assert false;
+                trash.append(line);
             } else {
-                allInfo += line + ",";
+                StringBuilder append = allInfo.append(line).append(",");
             }
         }
-        splitter = allInfo.split(",");
+        splitter = allInfo.toString().split(",");
         for (int i = 0; i < splitter.length; i += 4) {
             Integer time = Integer.valueOf(splitter[i]);
             String Restaurant = splitter[i + 1];
@@ -32,34 +34,33 @@ public class CrabProcess {
         }
     }
 
-    public void readRestaurant(String filename) throws IOException {
+    void readRestaurant(String filename) throws IOException {
         BufferedReader read = new BufferedReader(new FileReader(filename));
         String line;
-        String allInfo = "";
+        StringBuilder allInfo = new StringBuilder();
         String[] splitter;
-        String trash = null;
+        StringBuilder trash = null;
         while ((line = read.readLine()) != null) {
             if (isStringInt((line))) {
                 int branchesortime = Integer.parseInt(line);
-                allInfo += branchesortime + ",";
-            } else if (line.equals(null) || line.equals(" ")) {
-                trash += line;
+                allInfo.append(branchesortime).append(",");
+            } else if (line.equals(" ")) {
+                trash.append(line);
             } else {
-                allInfo += line + ",";
+                allInfo.append(line).append(",");
             }
         }
-        splitter = allInfo.split(",");
-        String location1[];
-        String location2[];
-        String location3[];
-        int newlocation1[] = new int[2];
-        int newlocation2[] = new int[2];
-        int newlocation3[] = new int[2];
-        Integer location11[][];
+        splitter = allInfo.toString().split(",");
+        String[] location1;
+        String[] location2;
+        String[] location3;
+        int[] newlocation1 = new int[2];
+        int[] newlocation2 = new int[2];
+        int[] newlocation3 = new int[2];
         RestaurantData method = new RestaurantData();
         for (int i = 0; i < splitter.length; i += 11) {
             HashMap<String, Integer> dishes = new HashMap<>();
-            ArrayList<ArrayList<Integer>> location = new ArrayList<>(3);
+            location = new ArrayList<>(3);
             for (int d = 0; d < 3; d++) {
                 location.add(new ArrayList());
             }
@@ -96,7 +97,7 @@ public class CrabProcess {
         }
     }
 
-    public boolean isStringInt(String s) {
+    private boolean isStringInt(String s) {
         try {
             Integer.parseInt(s);
             return true;
@@ -106,14 +107,12 @@ public class CrabProcess {
     }
 
     public String toString(ArrayList<ArrayList<Integer>>  myBoard){
-        String result = "";
-        for(int i = 0; i < myBoard.size(); i++){
-            for(int j = 0; j < myBoard.get(i).size(); j++){
-                result += myBoard.get(i).get(j);
-            }
-            result += "\n";
+        StringBuilder result = new StringBuilder();
+        for (ArrayList<Integer> integers : myBoard) {
+            for (Integer integer : integers) result.append(integer);
+            result.append("\n");
         }
-        return result;
+        return result.toString();
     }
 
     public String getRestaurantCustomer(int index){
@@ -133,14 +132,14 @@ public class CrabProcess {
         return customerdetails.size();
     }
 
-    public ArrayList<RestaurantData> getRestaurantdata(){
+    ArrayList<RestaurantData> getRestaurantdata(){
         return restaurantdata;
     }
     public String getNameRestaurant(int index){
         return restaurantdata.get(index).getName();
     }
 
-    public Integer getDishesTimeRestaurant(int index,String namedish){
+    Integer getDishesTimeRestaurant(int index, String namedish){
         return restaurantdata.get(index).getDishes().get(namedish);
     }
 
@@ -157,14 +156,18 @@ public class CrabProcess {
         return restaurantdata.get(index).getDishes();
     }
 
-    public ArrayList<Integer> getLocationRestaurant(int index,int whichbranch){
-        return restaurantdata.get(index).getLocation().get(whichbranch);
+    public ArrayList<Integer> getLocationRestaurant(int index,int random){
+        return restaurantdata.get(index).getLocation().get(random);
     }
 
-    public Integer getLocationRestaurant(int index, int whichbranch, int whichelement){
+    public Integer getIndexRestaurant(String restaurant){
+        return 0;
+    }
+
+    Integer getLocationRestaurant(int index, int whichbranch, int whichelement){
         return restaurantdata.get(index).getLocation().get(whichbranch).get(whichelement);
     }
-    public Integer getSizeofLocation(int index){
+    private Integer getSizeofLocation(int index){
         return restaurantdata.get(index).getLocation().size();
     }
 
@@ -179,9 +182,10 @@ public class CrabProcess {
     }
 
 
-    public Character getFirstNameChar(int index){
+    Character getFirstNameChar(int index){
         return restaurantdata.get(index).getName().charAt(0);
     }
+
 
 
 
