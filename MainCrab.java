@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class MainCrab {
     public static void main(String[] args) throws IOException {
@@ -10,12 +12,9 @@ public class MainCrab {
         test.readCustomer("F:\\IdeaProjects\\CrabFood\\Customer.txt");
         test.readRestaurant("F:\\IdeaProjects\\CrabFood\\InputRestaurant.txt");
         System.out.println(test.getRestaurantdata());
-        System.out.println(test.getDishesTimeRestaurant(0,"Crabby Patty"));
         test4.makeinitialmap();
         test4.printmap();
-        //test2.start();
-
-
+        test2.start();
 
 
     }
