@@ -127,6 +127,10 @@ public class CrabProcess {
         return customerdetails.get(index).getDishes();
     }
 
+    public int getSizeCustomer(int index){
+        return customerdetails.size();
+    }
+
 
     public int getSizeCustomer(){
         return customerdetails.size();
@@ -161,7 +165,11 @@ public class CrabProcess {
     }
 
     public Integer getIndexRestaurant(String restaurant){
-        return 0;
+        for (int i = 0; i < restaurantdata.size(); i++){
+            if (getNameRestaurant(i).equals(restaurant))
+                return i;
+        }
+        return -1;
     }
 
     Integer getLocationRestaurant(int index, int whichbranch, int whichelement){
